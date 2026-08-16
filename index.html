@@ -3,169 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080712">
-<title>LUMIO — Learn Smarter. Shine Brighter.</title>
+<title>LUMIO — Student Super App</title>
 <style>
 :root{
-  --bg:#080712; --panel:#111021; --panel2:#17152a; --text:#f7f5ff;
-  --muted:#aaa6bd; --line:rgba(255,255,255,.10); --purple:#a56bff;
-  --blue:#5e8cff; --glow:rgba(165,107,255,.28); --green:#51d6c1;
+  --bg:#070711;--panel:#101020;--panel2:#15152a;--text:#f6f4ff;--muted:#a9a5c7;
+  --accent:#8b5cf6;--accent2:#6366f1;--line:#282641;--good:#4ade80;--danger:#fb7185;
 }
-*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
-background:radial-gradient(circle at 75% 0%,rgba(105,68,190,.18),transparent 32%),var(--bg);color:var(--text)}
-button{font:inherit;color:inherit;border:0;cursor:pointer}
-.app{min-height:100vh;display:flex}
-.sidebar{width:245px;border-right:1px solid var(--line);padding:24px 16px;position:fixed;top:0;bottom:0;background:rgba(8,7,18,.82);backdrop-filter:blur(18px)}
-.brand{display:flex;align-items:center;gap:12px;padding:5px 10px 28px}
-.logo{width:43px;height:43px;border:1px solid rgba(165,107,255,.7);border-radius:14px;display:grid;place-items:center;
-font-family:Georgia,serif;font-size:27px;background:radial-gradient(circle,rgba(165,107,255,.22),transparent 68%);
-box-shadow:0 0 28px var(--glow)}
-.brand strong{font-size:21px;letter-spacing:5px}.brand small{display:block;color:var(--muted);letter-spacing:1px;margin-top:3px}
-.nav{display:grid;gap:8px}.nav button{background:transparent;text-align:left;padding:13px 14px;border-radius:14px;color:var(--muted);transition:.2s}
-.nav button:hover,.nav button.active{background:linear-gradient(90deg,rgba(165,107,255,.16),rgba(94,140,255,.06));color:white}
-.nav span{margin-right:10px}.side-bottom{position:absolute;bottom:22px;left:16px;right:16px}
-.theme{width:100%;padding:11px;border:1px solid var(--line);background:var(--panel);border-radius:13px;color:var(--muted)}
-main{margin-left:245px;width:calc(100% - 245px);max-width:1300px;padding:30px 38px 90px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.hello h1{margin:0;font-size:31px}.hello p{margin:7px 0 0;color:var(--muted)}
-.bell{width:45px;height:45px;border:1px solid var(--line);background:var(--panel);border-radius:50%}
-.grid{display:grid;gap:18px}.stats{grid-template-columns:1.25fr .75fr}.quick{grid-template-columns:repeat(4,1fr)}
-.card{background:linear-gradient(145deg,rgba(22,20,40,.94),rgba(12,11,23,.94));border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 18px 55px rgba(0,0,0,.18)}
-.streak{display:flex;justify-content:space-between;align-items:center}.eyebrow{color:var(--muted);font-size:13px;letter-spacing:.6px}.big{font-size:34px;font-weight:750;margin-top:8px}
-.days{display:flex;gap:8px;margin-top:18px}.day{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;font-size:11px;background:#24213a;color:#777}
-.day.on{background:linear-gradient(135deg,var(--purple),var(--blue));color:white;box-shadow:0 0 18px var(--glow)}
-.progressbar{height:9px;background:#252238;border-radius:20px;overflow:hidden;margin-top:15px}.progressbar i{display:block;height:100%;width:68%;border-radius:20px;background:linear-gradient(90deg,var(--purple),var(--blue))}
-.quick .card{min-height:150px;cursor:pointer;transition:transform .2s,border-color .2s}.quick .card:hover{transform:translateY(-4px);border-color:rgba(165,107,255,.45)}
-.qicon{font-size:28px}.quick h3{margin:16px 0 5px}.quick p{color:var(--muted);font-size:13px;margin:0}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 12px}.section-title h2{font-size:19px;margin:0}.link{color:#c5a7ff;background:none}
-.plan-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.plan-item:last-child{border:0}
-.subject-icon{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:rgba(165,107,255,.14)}
-.plan-item .info{flex:1}.info strong{display:block}.info small{color:var(--muted)}.time{color:#c7a7ff;font-weight:650}
-.start{width:38px;height:38px;border-radius:50%;background:#24203b}.done{background:rgba(81,214,193,.15);color:var(--green)}
-.ai{display:flex;align-items:center;justify-content:space-between;gap:20px;background:
-radial-gradient(circle at 80% 50%,rgba(165,107,255,.25),transparent 38%),linear-gradient(120deg,#151129,#0e0d1c)}
-.ai h2{margin:0 0 7px}.ai p{margin:0;color:var(--muted)}.primary{padding:12px 18px;border-radius:13px;background:linear-gradient(135deg,var(--purple),#725cff);box-shadow:0 8px 25px var(--glow);white-space:nowrap}
-.page{display:none}.page.active{display:block}
-.chat{max-width:850px}.messages{height:430px;overflow:auto;padding:8px}.msg{max-width:75%;padding:13px 15px;border-radius:16px;margin:10px 0;line-height:1.5}.bot{background:#18162a;color:#ddd}.user{margin-left:auto;background:linear-gradient(135deg,#6740a8,#405fb1)}
-.chatbar{display:flex;gap:10px;margin-top:12px}.chatbar input{flex:1;background:#151329;border:1px solid var(--line);color:white;border-radius:14px;padding:13px;outline:none}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.input{background:#151329;border:1px solid var(--line);color:white;padding:13px;border-radius:13px;width:100%;outline:none}
-@media(max-width:900px){.sidebar{width:75px}.brand div:not(.logo),.nav button b,.side-bottom{display:none}.nav button{text-align:center}.nav span{margin:0;font-size:20px}main{margin-left:75px;width:calc(100% - 75px);padding:22px}.quick{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}}
-@media(max-width:560px){.quick{grid-template-columns:1fr}.top{align-items:flex-start}.hello h1{font-size:24px}.card{padding:17px}}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 70% 0%,#1a1236 0,#090912 42%,#06060d 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,textarea{font:inherit} button{cursor:pointer}
+.app{display:flex;min-height:100vh}.side{width:250px;border-right:1px solid var(--line);padding:28px 18px;position:fixed;inset:0 auto 0 0;background:rgba(7,7,17,.88);backdrop-filter:blur(18px)}
+.logo{display:flex;gap:12px;align-items:center;margin:0 10px 34px}.logoMark{width:46px;height:46px;border:1px solid #9b7cff;border-radius:14px;display:grid;place-items:center;font-size:25px;box-shadow:0 0 30px #7c3aed55}.logo b{letter-spacing:5px;font-size:20px}.logo small{display:block;color:var(--muted);letter-spacing:2px;margin-top:3px}
+.nav button{width:100%;padding:14px 15px;border:0;background:transparent;color:#aaa6c5;text-align:left;border-radius:14px;margin:3px 0;font-weight:700}.nav button:hover,.nav button.active{background:#17142c;color:white}.nav span{display:inline-block;width:27px}
+.theme{position:absolute;bottom:22px;left:18px;right:18px}.theme button{width:100%;padding:13px;border:1px solid var(--line);background:#121226;color:#ddd9f5;border-radius:14px}
+.main{margin-left:250px;width:calc(100% - 250px);padding:35px 42px 60px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.eyebrow{color:#a78bfa;font-weight:800;letter-spacing:2px;font-size:12px}.top h1{font-size:38px;margin:7px 0 4px}.sub{color:var(--muted)}.avatar{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:#17142d;color:#c4b5fd;font-weight:800}
+.grid{display:grid;grid-template-columns:1.45fr 1fr;gap:18px}.card{background:linear-gradient(145deg,#121123,#0e0e1c);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 20px 50px #0004}.hero{min-height:210px}.hero h2{font-size:28px;margin:8px 0}.streak{font-size:38px;font-weight:900;margin:12px 0}.days{display:flex;gap:9px}.day{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:#25223d;color:#8f8aa9;font-size:12px}.day.on{background:linear-gradient(135deg,#a78bfa,#6366f1);color:white;box-shadow:0 0 18px #8b5cf655}
+.progress{height:9px;background:#27243b;border-radius:20px;overflow:hidden}.progress i{display:block;height:100%;width:68%;background:linear-gradient(90deg,#a855f7,#6366f1);border-radius:20px}.big{font-size:34px;font-weight:900}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.action{padding:22px;border:1px solid var(--line);border-radius:20px;background:#0f0f1e;transition:.2s}.action:hover{transform:translateY(-3px);border-color:#7656d9}.action .ico{font-size:28px}.action b{display:block;margin-top:14px;font-size:17px}.action small{color:var(--muted)}
+.section{display:none}.section.active{display:block}.sectionTitle{display:flex;justify-content:space-between;align-items:center;margin:8px 0 20px}.sectionTitle h2{font-size:28px;margin:0}
+.btn{border:0;border-radius:12px;padding:11px 16px;color:white;background:linear-gradient(135deg,#8b5cf6,#6366f1);font-weight:800}.btn.secondary{background:#19172c;border:1px solid var(--line)}.danger{background:#321522!important;color:#fecdd3!important}
+.row{display:flex;gap:12px;flex-wrap:wrap}.input,.area{width:100%;background:#0b0b16;border:1px solid var(--line);color:white;border-radius:13px;padding:13px;outline:none}.input:focus,.area:focus{border-color:#8b5cf6}.area{min-height:130px;resize:vertical}
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.note{padding:18px;background:#101020;border:1px solid var(--line);border-radius:18px}.note h3{margin:0 0 8px}.note p{color:var(--muted);line-height:1.55}.note .meta{font-size:12px;color:#9f8cff;margin-top:12px}
+.timer{text-align:center;max-width:620px;margin:auto}.clock{font-size:90px;font-weight:900;letter-spacing:2px;margin:25px 0}.timer .mode{color:#a78bfa;font-weight:800}.timerBtns{justify-content:center}
+.quiz{max-width:760px;margin:auto}.option{width:100%;text-align:left;background:#101020;color:white;border:1px solid var(--line);padding:15px;border-radius:14px;margin:8px 0}.option:hover{border-color:#8b5cf6}.option.correct{border-color:#4ade80;background:#0d2417}.option.wrong{border-color:#fb7185;background:#2a1118}
+.goal{display:flex;justify-content:space-between;align-items:center;padding:17px;border:1px solid var(--line);border-radius:16px;margin:10px 0;background:#101020}.check{width:25px;height:25px;border-radius:8px;border:1px solid #5d567d;background:transparent;color:white}.goal.done{opacity:.6;text-decoration:line-through}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.stat{padding:22px;border:1px solid var(--line);border-radius:18px;background:#101020}.stat strong{font-size:30px;display:block;margin-top:8px}
+.toast{position:fixed;right:25px;bottom:25px;padding:14px 18px;border-radius:14px;background:#18152d;border:1px solid #55418b;display:none;box-shadow:0 15px 40px #0008}
+@media(max-width:900px){.side{width:82px}.logo div:not(.logoMark),.logo small,.nav button b{display:none}.nav button{text-align:center}.main{margin-left:82px;width:calc(100% - 82px);padding:25px}.grid,.actions,.notes,.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.main{padding:18px}.actions,.notes,.stats,.grid{grid-template-columns:1fr}.top h1{font-size:28px}.clock{font-size:62px}}
 </style>
 </head>
 <body>
 <div class="app">
-<aside class="sidebar">
-  <div class="brand"><div class="logo">L</div><div><strong>LUMIO</strong><small>SHINE BRIGHTER</small></div></div>
+<aside class="side">
+  <div class="logo"><div class="logoMark">L</div><div><b>LUMIO</b><small>SHINE BRIGHTER</small></div></div>
   <nav class="nav">
-    <button class="active" data-page="home"><span>⌂</span><b>Home</b></button>
-    <button data-page="ai"><span>✦</span><b>AI Coach</b></button>
-    <button data-page="study"><span>▣</span><b>Study</b></button>
-    <button data-page="practice"><span>✓</span><b>Practice</b></button>
-    <button data-page="progress"><span>◫</span><b>Progress</b></button>
-    <button data-page="profile"><span>◯</span><b>Profile</b></button>
+    <button class="active" data-page="home">⌂ <b>Home</b></button>
+    <button data-page="coach">✦ <b>AI Coach</b></button>
+    <button data-page="study">▣ <b>Study</b></button>
+    <button data-page="practice">✓ <b>Practice</b></button>
+    <button data-page="progress">◫ <b>Progress</b></button>
+    <button data-page="profile">○ <b>Profile</b></button>
   </nav>
-  <div class="side-bottom"><button class="theme" id="themeBtn">☾ Toggle theme</button></div>
+  <div class="theme"><button onclick="toggleTheme()">◐ Toggle theme</button></div>
 </aside>
 
-<main>
-<section id="home" class="page active">
-  <div class="top"><div class="hello"><h1>Good morning 👋</h1><p>Ready to make today count?</p></div><button class="bell">♧</button></div>
-  <div class="grid stats">
-    <div class="card streak"><div><div class="eyebrow">CURRENT STREAK</div><div class="big">🔥 7 days</div><div class="days"><i class="day on">M</i><i class="day on">T</i><i class="day on">W</i><i class="day on">T</i><i class="day on">F</i><i class="day on">S</i><i class="day">S</i></div></div><div style="min-width:170px"><div class="eyebrow">TODAY'S PROGRESS</div><div class="big">68%</div><div class="progressbar"><i></i></div></div></div>
-    <div class="card"><div class="eyebrow">TODAY'S FOCUS</div><div class="big">1h 35m</div><p style="color:var(--muted)">3 sessions planned</p><button class="primary" data-page="study">Start studying →</button></div>
-  </div>
-
-  <div class="section-title"><h2>Quick actions</h2></div>
-  <div class="grid quick">
-    <div class="card" data-page="ai"><div class="qicon">🤖</div><h3>Ask AI</h3><p>Your study assistant</p></div>
-    <div class="card" data-page="study"><div class="qicon">📚</div><h3>Study</h3><p>Notes & resources</p></div>
-    <div class="card" data-page="practice"><div class="qicon">📝</div><h3>Practice</h3><p>Questions & quizzes</p></div>
-    <div class="card" data-page="progress"><div class="qicon">🎯</div><h3>Goals</h3><p>Plan, track & achieve</p></div>
-  </div>
-
-  <div class="section-title"><h2>Today's plan</h2><button class="link">View all →</button></div>
-  <div class="card">
-    <div class="plan-item"><div class="subject-icon">⚛</div><div class="info"><strong>Physics</strong><small>Kinematics</small></div><span class="time">45 min</span><button class="start">▶</button></div>
-    <div class="plan-item"><div class="subject-icon">√</div><div class="info"><strong>Mathematics</strong><small>Calculus</small></div><span class="time">30 min</span><button class="start">▶</button></div>
-    <div class="plan-item"><div class="subject-icon">✎</div><div class="info"><strong>Revision</strong><small>Important formulas</small></div><span class="time">20 min</span><button class="start">▶</button></div>
-  </div>
-
-  <div class="section-title"><h2>AI Study Coach</h2></div>
-  <div class="card ai"><div><h2>Study smarter with LUMIO ✦</h2><p>Tell me your exam, topic or available time and I'll help you plan.</p></div><button class="primary" data-page="ai">Ask LUMIO →</button></div>
+<main class="main">
+<section id="home" class="section active">
+ <div class="top"><div><div class="eyebrow">YOUR STUDY SPACE</div><h1>Good morning 👋</h1><div class="sub">Ready to make today count?</div></div><button class="avatar">L</button></div>
+ <div class="grid">
+  <div class="card hero"><div class="eyebrow">CURRENT STREAK</div><div class="streak">🔥 <span id="streak">7</span> days</div><div class="days"><div class="day on">M</div><div class="day on">T</div><div class="day on">W</div><div class="day on">T</div><div class="day on">F</div><div class="day on">S</div><div class="day">S</div></div></div>
+  <div class="card"><div class="eyebrow">TODAY'S FOCUS</div><div class="big" style="margin:10px 0">1h 35m</div><div class="sub">3 sessions planned</div><button class="btn" style="margin-top:18px" onclick="showPage('study')">Start studying →</button></div>
+ </div>
+ <h2 style="margin:28px 0 14px">Quick actions</h2>
+ <div class="actions">
+  <div class="action" onclick="showPage('coach')"><div class="ico">🤖</div><b>Ask AI</b><small>Your study assistant</small></div>
+  <div class="action" onclick="showPage('study')"><div class="ico">📚</div><b>Study</b><small>Notes & resources</small></div>
+  <div class="action" onclick="showPage('practice')"><div class="ico">📝</div><b>Practice</b><small>Questions & quizzes</small></div>
+  <div class="action" onclick="showPage('progress')"><div class="ico">🎯</div><b>Goals</b><small>Plan, track & achieve</small></div>
+ </div>
+ <div class="card" style="margin-top:18px"><div class="sectionTitle"><h2>Today's plan</h2><span class="sub">3 sessions</span></div><div class="goal"><div>⚛️ <b>Physics</b><div class="sub">Kinematics · 45 min</div></div><button class="btn" onclick="startTimer()">Start</button></div><div class="goal"><div>📐 <b>Mathematics</b><div class="sub">Geometry · 30 min</div></div><button class="btn secondary" onclick="startTimer()">Focus</button></div></div>
 </section>
 
-<section id="ai" class="page">
-  <div class="top"><div class="hello"><h1>AI Study Coach ✦</h1><p>Your personal study companion.</p></div></div>
-  <div class="card chat"><div class="messages" id="messages">
-    <div class="msg bot">Hey! I'm LUMIO. Tell me what you're studying, and I'll help you make a plan. ✨</div>
-    <div class="msg bot">Try: “I have a physics test tomorrow and 2 hours to study.”</div>
-  </div><div class="chatbar"><input id="chatInput" placeholder="Ask LUMIO anything about studying..."><button class="primary" id="sendBtn">Send</button></div></div>
+<section id="coach" class="section">
+ <div class="sectionTitle"><div><div class="eyebrow">SMART STUDY ASSISTANT</div><h2>AI Coach 🤖</h2></div></div>
+ <div class="card">
+  <p class="sub">Ask a study question. This demo gives instant guidance; a real AI API can be connected later.</p>
+  <textarea id="aiQ" class="area" placeholder="e.g. Explain Newton's laws in simple words..."></textarea>
+  <button class="btn" style="margin-top:12px" onclick="askAI()">Ask LUMIO →</button>
+  <div id="aiA" style="margin-top:20px;line-height:1.7"></div>
+ </div>
 </section>
 
-<section id="study" class="page">
-  <div class="top"><div class="hello"><h1>Study 📚</h1><p>Keep your knowledge organised.</p></div></div>
-  <div class="card"><h2>My subjects</h2><div class="form-grid">
-    <input class="input" placeholder="Subject e.g. Physics"><input class="input" placeholder="Chapter e.g. Motion in 1D">
-  </div><br><button class="primary">+ Create note</button></div>
-  <div class="section-title"><h2>Recent notes</h2></div>
-  <div class="card"><div class="plan-item"><div class="subject-icon">⚛</div><div class="info"><strong>Motion in One Dimension</strong><small>Physics • Updated today</small></div><button class="start">→</button></div>
-  <div class="plan-item"><div class="subject-icon">√</div><div class="info"><strong>Important Calculus Formulas</strong><small>Mathematics • Yesterday</small></div><button class="start">→</button></div></div>
+<section id="study" class="section">
+ <div class="sectionTitle"><div><div class="eyebrow">LEARN & ORGANIZE</div><h2>Study & Notes 📚</h2></div><button class="btn" onclick="newNote()">+ New note</button></div>
+ <div id="noteForm" class="card" style="display:none;margin-bottom:16px"><input id="noteTitle" class="input" placeholder="Note title"><textarea id="noteText" class="area" style="margin-top:10px" placeholder="Write your notes..."></textarea><div class="row" style="margin-top:10px"><button class="btn" onclick="saveNote()">Save note</button><button class="btn secondary" onclick="closeNote()">Cancel</button></div></div>
+ <div id="notes" class="notes"></div>
 </section>
 
-<section id="practice" class="page">
-  <div class="top"><div class="hello"><h1>Practice 📝</h1><p>Test yourself and find weak topics.</p></div></div>
-  <div class="card"><h2>AI Quiz Generator</h2><p style="color:var(--muted)">Choose a subject and let LUMIO create a practice test.</p>
-  <div class="form-grid"><select class="input"><option>Physics</option><option>Mathematics</option><option>Chemistry</option></select><select class="input"><option>Medium</option><option>Easy</option><option>Hard</option></select></div><br><button class="primary" id="quizBtn">Generate 10 questions ✦</button></div>
+<section id="practice" class="section">
+ <div class="sectionTitle"><div><div class="eyebrow">TEST YOURSELF</div><h2>Practice Quiz 📝</h2></div></div>
+ <div class="card quiz" id="quizBox"></div>
 </section>
 
-<section id="progress" class="page">
-  <div class="top"><div class="hello"><h1>Your progress 📊</h1><p>Consistency beats intensity.</p></div></div>
-  <div class="grid quick"><div class="card"><div class="eyebrow">STUDY TIME</div><div class="big">12h 40m</div></div><div class="card"><div class="eyebrow">TESTS</div><div class="big">18</div></div><div class="card"><div class="eyebrow">AVG SCORE</div><div class="big">84%</div></div><div class="card"><div class="eyebrow">STREAK</div><div class="big">7 🔥</div></div></div>
-  <div class="section-title"><h2>Subject mastery</h2></div><div class="card"><p>Physics</p><div class="progressbar"><i style="width:78%"></i></div><p>Mathematics</p><div class="progressbar"><i style="width:64%"></i></div><p>Chemistry</p><div class="progressbar"><i style="width:52%"></i></div></div>
+<section id="progress" class="section">
+ <div class="sectionTitle"><div><div class="eyebrow">YOUR JOURNEY</div><h2>Progress & Goals 🎯</h2></div></div>
+ <div class="stats"><div class="stat">Study time<strong>4h 20m</strong><span class="sub">this week</span></div><div class="stat">Quiz accuracy<strong>82%</strong><span class="sub">average</span></div><div class="stat">Streak<strong>7 days</strong><span class="sub">keep going!</span></div></div>
+ <div class="card" style="margin-top:18px"><h2>Today's goals</h2><div id="goals"></div><div class="row" style="margin-top:14px"><input id="goalInput" class="input" style="flex:1;min-width:220px" placeholder="Add a goal..."><button class="btn" onclick="addGoal()">Add goal</button></div></div>
 </section>
 
-<section id="profile" class="page">
-  <div class="top"><div class="hello"><h1>Profile ◯</h1><p>Your LUMIO space.</p></div></div>
-  <div class="card"><div style="display:flex;align-items:center;gap:16px"><div class="logo" style="width:60px;height:60px">L</div><div><h2 style="margin:0">Student</h2><p style="color:var(--muted);margin:5px 0">Keep learning. Keep shining.</p></div></div><hr style="border:0;border-top:1px solid var(--line);margin:22px 0"><button class="theme">⚙ Settings & preferences</button></div>
+<section id="profile" class="section">
+ <div class="sectionTitle"><div><div class="eyebrow">YOUR SPACE</div><h2>Profile & Settings</h2></div></div>
+ <div class="card"><h2>LUMIO Student</h2><p class="sub">Personalize your study experience.</p><label class="sub">Display name</label><input id="name" class="input" style="margin:8px 0 14px" value="Student"><button class="btn" onclick="saveName()">Save profile</button></div>
+ <div class="card" style="margin-top:16px"><h3>About LUMIO</h3><p class="sub">Aesthetic student super-app prototype built for focused learning, practice and progress.</p></div>
 </section>
 </main>
 </div>
+<div id="toast" class="toast"></div>
 
 <script>
-const pages=[...document.querySelectorAll('.page')];
-function openPage(id){
-  pages.forEach(p=>p.classList.toggle('active',p.id===id));
-  document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
-
-document.getElementById('themeBtn').addEventListener('click',()=>{
-  document.body.classList.toggle('light');
-  const light=document.body.classList.contains('light');
-  if(light){
-    document.documentElement.style.setProperty('--bg','#f5f3fa');
-    document.documentElement.style.setProperty('--panel','#ffffff');
-    document.documentElement.style.setProperty('--panel2','#ffffff');
-    document.documentElement.style.setProperty('--text','#181521');
-    document.documentElement.style.setProperty('--muted','#696477');
-    document.documentElement.style.setProperty('--line','rgba(30,20,50,.12)');
-  }else location.reload();
-});
-
-const input=document.getElementById('chatInput'), messages=document.getElementById('messages');
-function send(){
-  const text=input.value.trim(); if(!text)return;
-  messages.innerHTML += `<div class="msg user">${text.replace(/</g,'&lt;')}</div>`;
-  input.value='';
-  setTimeout(()=>{
-    messages.innerHTML += `<div class="msg bot">Great question! ✨ For a real AI response, we'll connect LUMIO to a secure AI backend next. For now, tell me your subject, topic and how much time you have, and I'll help structure your study session.</div>`;
-    messages.scrollTop=messages.scrollHeight;
-  },450);
-}
-document.getElementById('sendBtn').addEventListener('click',send);
-input.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
-document.getElementById('quizBtn').addEventListener('click',()=>alert('Quiz generator UI is ready. Real AI question generation will be connected in the next phase.'));
+const pages=document.querySelectorAll('.section'), nav=document.querySelectorAll('.nav button');
+function showPage(id){pages.forEach(p=>p.classList.toggle('active',p.id===id));nav.forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo(0,0)}
+nav.forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',2200)}
+function toggleTheme(){document.body.classList.toggle('light'); if(document.body.classList.contains('light')){document.documentElement.style.setProperty('--bg','#f5f3ff');document.documentElement.style.setProperty('--panel','#fff');document.documentElement.style.setProperty('--panel2','#f0edff');document.documentElement.style.setProperty('--text','#171426');document.documentElement.style.setProperty('--muted','#625c78');document.documentElement.style.setProperty('--line','#ddd7f2');document.body.style.background='#f5f3ff'}else{location.reload()}}
+let notes=JSON.parse(localStorage.getItem('lumioNotes')||'[]');
+function renderNotes(){let box=document.getElementById('notes');box.innerHTML=notes.length?notes.map((n,i)=>`<article class="note"><h3>${escape(n.title)}</h3><p>${escape(n.text)}</p><div class="meta">LUMIO note · <button class="btn danger" style="padding:5px 9px;font-size:11px" onclick="deleteNote(${i})">Delete</button></div></article>`).join(''):`<div class="card" style="grid-column:1/-1;text-align:center"><h3>No notes yet ✨</h3><p class="sub">Create your first study note.</p></div>`}
+function newNote(){document.getElementById('noteForm').style.display='block';document.getElementById('noteTitle').focus()}
+function closeNote(){document.getElementById('noteForm').style.display='none'}
+function saveNote(){let t=document.getElementById('noteTitle').value.trim(),x=document.getElementById('noteText').value.trim();if(!t||!x)return toast('Add a title and note first.');notes.unshift({title:t,text:x});localStorage.setItem('lumioNotes',JSON.stringify(notes));document.getElementById('noteTitle').value='';document.getElementById('noteText').value='';closeNote();renderNotes();toast('Note saved ✨')}
+function deleteNote(i){notes.splice(i,1);localStorage.setItem('lumioNotes',JSON.stringify(notes));renderNotes();toast('Note deleted')}
+function escape(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function askAI(){let q=document.getElementById('aiQ').value.trim(),a=document.getElementById('aiA');if(!q)return toast('Type a question first.');let l=q.toLowerCase();let ans=l.includes('newton')?'Newton’s laws describe how forces affect motion: 1) an object keeps its state of motion unless a net force acts, 2) force relates to mass and acceleration (F = ma), and 3) forces come in equal-and-opposite pairs. Try explaining each law in your own words.':l.includes('democracy')?'Democracy is a system in which people participate in choosing their government, usually through elections. Key ideas include popular participation, equality, accountability and rule of law.':l.includes('geometry')?'Start geometry by identifying the given information, drawing a clean diagram, choosing the relevant theorem/formula, and checking whether your final answer has the correct units.':'Break the question into: what is given, what is asked, and which concept connects them. Then solve one step at a time and check your answer. For a deeper answer, connect this question to a chapter you are studying.';a.innerHTML=`<div class="card" style="background:#0b0b16"><b>💡 LUMIO:</b><p>${ans}</p></div>`}
+const questions=[{q:'What is the SI unit of force?',o:['Joule','Newton','Watt','Pascal'],a:1},{q:'Which planet is known as the Red Planet?',o:['Venus','Mars','Jupiter','Mercury'],a:1},{q:'What is 12 × 8?',o:['86','96','108','112'],a:1}];let qi=0,score=0;
+function renderQuiz(){let x=questions[qi];document.getElementById('quizBox').innerHTML=`<div class="eyebrow">QUESTION ${qi+1} OF ${questions.length}</div><h2>${x.q}</h2>${x.o.map((o,i)=>`<button class="option" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<p class="sub">Score: ${score}</p>`}
+function answer(i){let x=questions[qi],opts=document.querySelectorAll('.option');opts[i].classList.add(i===x.a?'correct':'wrong');if(i===x.a)score++;setTimeout(()=>{qi++;if(qi>=questions.length){document.getElementById('quizBox').innerHTML=`<div style="text-align:center"><div class="big">🎉 ${score}/${questions.length}</div><h2>Quiz complete!</h2><p class="sub">Nice work. Practice again to improve your score.</p><button class="btn" onclick="qi=0;score=0;renderQuiz()">Try again</button></div>`}else renderQuiz()},500)}
+let goals=JSON.parse(localStorage.getItem('lumioGoals')||'["Study Physics for 45 minutes","Solve 10 practice questions"]');
+function renderGoals(){document.getElementById('goals').innerHTML=goals.map((g,i)=>`<div class="goal"><span>${escape(g)}</span><button class="check" onclick="doneGoal(this)">✓</button></div>`).join('')}
+function doneGoal(b){b.parentElement.classList.toggle('done');toast('Goal updated 🎯')}
+function addGoal(){let x=document.getElementById('goalInput').value.trim();if(!x)return;goals.push(x);localStorage.setItem('lumioGoals',JSON.stringify(goals));document.getElementById('goalInput').value='';renderGoals();toast('Goal added 🎯')}
+function saveName(){let n=document.getElementById('name').value.trim();localStorage.setItem('lumioName',n||'Student');toast('Profile saved ✨')}
+let end=0,timer=null;
+function startTimer(){showPage('study');toast('Focus timer coming up next — use the Practice/Study tools for now.')}
+renderNotes();renderQuiz();renderGoals();if(localStorage.getItem('lumioName'))document.getElementById('name').value=localStorage.getItem('lumioName');
 </script>
 </body>
 </html>
