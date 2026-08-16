@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080712">
+<title>LUMIO — Learn Smarter. Shine Brighter.</title>
+<style>
+:root{
+  --bg:#080712; --panel:#111021; --panel2:#17152a; --text:#f7f5ff;
+  --muted:#aaa6bd; --line:rgba(255,255,255,.10); --purple:#a56bff;
+  --blue:#5e8cff; --glow:rgba(165,107,255,.28); --green:#51d6c1;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
+background:radial-gradient(circle at 75% 0%,rgba(105,68,190,.18),transparent 32%),var(--bg);color:var(--text)}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+.app{min-height:100vh;display:flex}
+.sidebar{width:245px;border-right:1px solid var(--line);padding:24px 16px;position:fixed;top:0;bottom:0;background:rgba(8,7,18,.82);backdrop-filter:blur(18px)}
+.brand{display:flex;align-items:center;gap:12px;padding:5px 10px 28px}
+.logo{width:43px;height:43px;border:1px solid rgba(165,107,255,.7);border-radius:14px;display:grid;place-items:center;
+font-family:Georgia,serif;font-size:27px;background:radial-gradient(circle,rgba(165,107,255,.22),transparent 68%);
+box-shadow:0 0 28px var(--glow)}
+.brand strong{font-size:21px;letter-spacing:5px}.brand small{display:block;color:var(--muted);letter-spacing:1px;margin-top:3px}
+.nav{display:grid;gap:8px}.nav button{background:transparent;text-align:left;padding:13px 14px;border-radius:14px;color:var(--muted);transition:.2s}
+.nav button:hover,.nav button.active{background:linear-gradient(90deg,rgba(165,107,255,.16),rgba(94,140,255,.06));color:white}
+.nav span{margin-right:10px}.side-bottom{position:absolute;bottom:22px;left:16px;right:16px}
+.theme{width:100%;padding:11px;border:1px solid var(--line);background:var(--panel);border-radius:13px;color:var(--muted)}
+main{margin-left:245px;width:calc(100% - 245px);max-width:1300px;padding:30px 38px 90px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.hello h1{margin:0;font-size:31px}.hello p{margin:7px 0 0;color:var(--muted)}
+.bell{width:45px;height:45px;border:1px solid var(--line);background:var(--panel);border-radius:50%}
+.grid{display:grid;gap:18px}.stats{grid-template-columns:1.25fr .75fr}.quick{grid-template-columns:repeat(4,1fr)}
+.card{background:linear-gradient(145deg,rgba(22,20,40,.94),rgba(12,11,23,.94));border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 18px 55px rgba(0,0,0,.18)}
+.streak{display:flex;justify-content:space-between;align-items:center}.eyebrow{color:var(--muted);font-size:13px;letter-spacing:.6px}.big{font-size:34px;font-weight:750;margin-top:8px}
+.days{display:flex;gap:8px;margin-top:18px}.day{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;font-size:11px;background:#24213a;color:#777}
+.day.on{background:linear-gradient(135deg,var(--purple),var(--blue));color:white;box-shadow:0 0 18px var(--glow)}
+.progressbar{height:9px;background:#252238;border-radius:20px;overflow:hidden;margin-top:15px}.progressbar i{display:block;height:100%;width:68%;border-radius:20px;background:linear-gradient(90deg,var(--purple),var(--blue))}
+.quick .card{min-height:150px;cursor:pointer;transition:transform .2s,border-color .2s}.quick .card:hover{transform:translateY(-4px);border-color:rgba(165,107,255,.45)}
+.qicon{font-size:28px}.quick h3{margin:16px 0 5px}.quick p{color:var(--muted);font-size:13px;margin:0}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 12px}.section-title h2{font-size:19px;margin:0}.link{color:#c5a7ff;background:none}
+.plan-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.plan-item:last-child{border:0}
+.subject-icon{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:rgba(165,107,255,.14)}
+.plan-item .info{flex:1}.info strong{display:block}.info small{color:var(--muted)}.time{color:#c7a7ff;font-weight:650}
+.start{width:38px;height:38px;border-radius:50%;background:#24203b}.done{background:rgba(81,214,193,.15);color:var(--green)}
+.ai{display:flex;align-items:center;justify-content:space-between;gap:20px;background:
+radial-gradient(circle at 80% 50%,rgba(165,107,255,.25),transparent 38%),linear-gradient(120deg,#151129,#0e0d1c)}
+.ai h2{margin:0 0 7px}.ai p{margin:0;color:var(--muted)}.primary{padding:12px 18px;border-radius:13px;background:linear-gradient(135deg,var(--purple),#725cff);box-shadow:0 8px 25px var(--glow);white-space:nowrap}
+.page{display:none}.page.active{display:block}
+.chat{max-width:850px}.messages{height:430px;overflow:auto;padding:8px}.msg{max-width:75%;padding:13px 15px;border-radius:16px;margin:10px 0;line-height:1.5}.bot{background:#18162a;color:#ddd}.user{margin-left:auto;background:linear-gradient(135deg,#6740a8,#405fb1)}
+.chatbar{display:flex;gap:10px;margin-top:12px}.chatbar input{flex:1;background:#151329;border:1px solid var(--line);color:white;border-radius:14px;padding:13px;outline:none}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.input{background:#151329;border:1px solid var(--line);color:white;padding:13px;border-radius:13px;width:100%;outline:none}
+@media(max-width:900px){.sidebar{width:75px}.brand div:not(.logo),.nav button b,.side-bottom{display:none}.nav button{text-align:center}.nav span{margin:0;font-size:20px}main{margin-left:75px;width:calc(100% - 75px);padding:22px}.quick{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.quick{grid-template-columns:1fr}.top{align-items:flex-start}.hello h1{font-size:24px}.card{padding:17px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">L</div><div><strong>LUMIO</strong><small>SHINE BRIGHTER</small></div></div>
+  <nav class="nav">
+    <button class="active" data-page="home"><span>⌂</span><b>Home</b></button>
+    <button data-page="ai"><span>✦</span><b>AI Coach</b></button>
+    <button data-page="study"><span>▣</span><b>Study</b></button>
+    <button data-page="practice"><span>✓</span><b>Practice</b></button>
+    <button data-page="progress"><span>◫</span><b>Progress</b></button>
+    <button data-page="profile"><span>◯</span><b>Profile</b></button>
+  </nav>
+  <div class="side-bottom"><button class="theme" id="themeBtn">☾ Toggle theme</button></div>
+</aside>
+
+<main>
+<section id="home" class="page active">
+  <div class="top"><div class="hello"><h1>Good morning 👋</h1><p>Ready to make today count?</p></div><button class="bell">♧</button></div>
+  <div class="grid stats">
+    <div class="card streak"><div><div class="eyebrow">CURRENT STREAK</div><div class="big">🔥 7 days</div><div class="days"><i class="day on">M</i><i class="day on">T</i><i class="day on">W</i><i class="day on">T</i><i class="day on">F</i><i class="day on">S</i><i class="day">S</i></div></div><div style="min-width:170px"><div class="eyebrow">TODAY'S PROGRESS</div><div class="big">68%</div><div class="progressbar"><i></i></div></div></div>
+    <div class="card"><div class="eyebrow">TODAY'S FOCUS</div><div class="big">1h 35m</div><p style="color:var(--muted)">3 sessions planned</p><button class="primary" data-page="study">Start studying →</button></div>
+  </div>
+
+  <div class="section-title"><h2>Quick actions</h2></div>
+  <div class="grid quick">
+    <div class="card" data-page="ai"><div class="qicon">🤖</div><h3>Ask AI</h3><p>Your study assistant</p></div>
+    <div class="card" data-page="study"><div class="qicon">📚</div><h3>Study</h3><p>Notes & resources</p></div>
+    <div class="card" data-page="practice"><div class="qicon">📝</div><h3>Practice</h3><p>Questions & quizzes</p></div>
+    <div class="card" data-page="progress"><div class="qicon">🎯</div><h3>Goals</h3><p>Plan, track & achieve</p></div>
+  </div>
+
+  <div class="section-title"><h2>Today's plan</h2><button class="link">View all →</button></div>
+  <div class="card">
+    <div class="plan-item"><div class="subject-icon">⚛</div><div class="info"><strong>Physics</strong><small>Kinematics</small></div><span class="time">45 min</span><button class="start">▶</button></div>
+    <div class="plan-item"><div class="subject-icon">√</div><div class="info"><strong>Mathematics</strong><small>Calculus</small></div><span class="time">30 min</span><button class="start">▶</button></div>
+    <div class="plan-item"><div class="subject-icon">✎</div><div class="info"><strong>Revision</strong><small>Important formulas</small></div><span class="time">20 min</span><button class="start">▶</button></div>
+  </div>
+
+  <div class="section-title"><h2>AI Study Coach</h2></div>
+  <div class="card ai"><div><h2>Study smarter with LUMIO ✦</h2><p>Tell me your exam, topic or available time and I'll help you plan.</p></div><button class="primary" data-page="ai">Ask LUMIO →</button></div>
+</section>
+
+<section id="ai" class="page">
+  <div class="top"><div class="hello"><h1>AI Study Coach ✦</h1><p>Your personal study companion.</p></div></div>
+  <div class="card chat"><div class="messages" id="messages">
+    <div class="msg bot">Hey! I'm LUMIO. Tell me what you're studying, and I'll help you make a plan. ✨</div>
+    <div class="msg bot">Try: “I have a physics test tomorrow and 2 hours to study.”</div>
+  </div><div class="chatbar"><input id="chatInput" placeholder="Ask LUMIO anything about studying..."><button class="primary" id="sendBtn">Send</button></div></div>
+</section>
+
+<section id="study" class="page">
+  <div class="top"><div class="hello"><h1>Study 📚</h1><p>Keep your knowledge organised.</p></div></div>
+  <div class="card"><h2>My subjects</h2><div class="form-grid">
+    <input class="input" placeholder="Subject e.g. Physics"><input class="input" placeholder="Chapter e.g. Motion in 1D">
+  </div><br><button class="primary">+ Create note</button></div>
+  <div class="section-title"><h2>Recent notes</h2></div>
+  <div class="card"><div class="plan-item"><div class="subject-icon">⚛</div><div class="info"><strong>Motion in One Dimension</strong><small>Physics • Updated today</small></div><button class="start">→</button></div>
+  <div class="plan-item"><div class="subject-icon">√</div><div class="info"><strong>Important Calculus Formulas</strong><small>Mathematics • Yesterday</small></div><button class="start">→</button></div></div>
+</section>
+
+<section id="practice" class="page">
+  <div class="top"><div class="hello"><h1>Practice 📝</h1><p>Test yourself and find weak topics.</p></div></div>
+  <div class="card"><h2>AI Quiz Generator</h2><p style="color:var(--muted)">Choose a subject and let LUMIO create a practice test.</p>
+  <div class="form-grid"><select class="input"><option>Physics</option><option>Mathematics</option><option>Chemistry</option></select><select class="input"><option>Medium</option><option>Easy</option><option>Hard</option></select></div><br><button class="primary" id="quizBtn">Generate 10 questions ✦</button></div>
+</section>
+
+<section id="progress" class="page">
+  <div class="top"><div class="hello"><h1>Your progress 📊</h1><p>Consistency beats intensity.</p></div></div>
+  <div class="grid quick"><div class="card"><div class="eyebrow">STUDY TIME</div><div class="big">12h 40m</div></div><div class="card"><div class="eyebrow">TESTS</div><div class="big">18</div></div><div class="card"><div class="eyebrow">AVG SCORE</div><div class="big">84%</div></div><div class="card"><div class="eyebrow">STREAK</div><div class="big">7 🔥</div></div></div>
+  <div class="section-title"><h2>Subject mastery</h2></div><div class="card"><p>Physics</p><div class="progressbar"><i style="width:78%"></i></div><p>Mathematics</p><div class="progressbar"><i style="width:64%"></i></div><p>Chemistry</p><div class="progressbar"><i style="width:52%"></i></div></div>
+</section>
+
+<section id="profile" class="page">
+  <div class="top"><div class="hello"><h1>Profile ◯</h1><p>Your LUMIO space.</p></div></div>
+  <div class="card"><div style="display:flex;align-items:center;gap:16px"><div class="logo" style="width:60px;height:60px">L</div><div><h2 style="margin:0">Student</h2><p style="color:var(--muted);margin:5px 0">Keep learning. Keep shining.</p></div></div><hr style="border:0;border-top:1px solid var(--line);margin:22px 0"><button class="theme">⚙ Settings & preferences</button></div>
+</section>
+</main>
+</div>
+
+<script>
+const pages=[...document.querySelectorAll('.page')];
+function openPage(id){
+  pages.forEach(p=>p.classList.toggle('active',p.id===id));
+  document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
+
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  document.body.classList.toggle('light');
+  const light=document.body.classList.contains('light');
+  if(light){
+    document.documentElement.style.setProperty('--bg','#f5f3fa');
+    document.documentElement.style.setProperty('--panel','#ffffff');
+    document.documentElement.style.setProperty('--panel2','#ffffff');
+    document.documentElement.style.setProperty('--text','#181521');
+    document.documentElement.style.setProperty('--muted','#696477');
+    document.documentElement.style.setProperty('--line','rgba(30,20,50,.12)');
+  }else location.reload();
+});
+
+const input=document.getElementById('chatInput'), messages=document.getElementById('messages');
+function send(){
+  const text=input.value.trim(); if(!text)return;
+  messages.innerHTML += `<div class="msg user">${text.replace(/</g,'&lt;')}</div>`;
+  input.value='';
+  setTimeout(()=>{
+    messages.innerHTML += `<div class="msg bot">Great question! ✨ For a real AI response, we'll connect LUMIO to a secure AI backend next. For now, tell me your subject, topic and how much time you have, and I'll help structure your study session.</div>`;
+    messages.scrollTop=messages.scrollHeight;
+  },450);
+}
+document.getElementById('sendBtn').addEventListener('click',send);
+input.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+document.getElementById('quizBtn').addEventListener('click',()=>alert('Quiz generator UI is ready. Real AI question generation will be connected in the next phase.'));
+</script>
+</body>
+</html>
