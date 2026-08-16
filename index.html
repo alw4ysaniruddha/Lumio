@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LUMIO — Student Super App</title>
+<title>LUMIO — Student Super App • AI Coach</title>
 <style>
 :root{
   --bg:#070711;--panel:#101020;--panel2:#15152a;--text:#f6f4ff;--muted:#a9a5c7;
@@ -112,7 +112,34 @@ function closeNote(){document.getElementById('noteForm').style.display='none'}
 function saveNote(){let t=document.getElementById('noteTitle').value.trim(),x=document.getElementById('noteText').value.trim();if(!t||!x)return toast('Add a title and note first.');notes.unshift({title:t,text:x});localStorage.setItem('lumioNotes',JSON.stringify(notes));document.getElementById('noteTitle').value='';document.getElementById('noteText').value='';closeNote();renderNotes();toast('Note saved ✨')}
 function deleteNote(i){notes.splice(i,1);localStorage.setItem('lumioNotes',JSON.stringify(notes));renderNotes();toast('Note deleted')}
 function escape(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function askAI(){let q=document.getElementById('aiQ').value.trim(),a=document.getElementById('aiA');if(!q)return toast('Type a question first.');let l=q.toLowerCase();let ans=l.includes('newton')?'Newton’s laws describe how forces affect motion: 1) an object keeps its state of motion unless a net force acts, 2) force relates to mass and acceleration (F = ma), and 3) forces come in equal-and-opposite pairs. Try explaining each law in your own words.':l.includes('democracy')?'Democracy is a system in which people participate in choosing their government, usually through elections. Key ideas include popular participation, equality, accountability and rule of law.':l.includes('geometry')?'Start geometry by identifying the given information, drawing a clean diagram, choosing the relevant theorem/formula, and checking whether your final answer has the correct units.':'Break the question into: what is given, what is asked, and which concept connects them. Then solve one step at a time and check your answer. For a deeper answer, connect this question to a chapter you are studying.';a.innerHTML=`<div class="card" style="background:#0b0b16"><b>💡 LUMIO:</b><p>${ans}</p></div>`}
+function askAI(){
+  const q=document.getElementById('aiQ').value.trim();
+  const a=document.getElementById('aiA');
+  if(!q)return toast('Type a question first.');
+  const l=q.toLowerCase();
+
+  const topics = [
+    {keys:['newton','motion','force','f=ma'], title:'Physics • Motion & Newton',
+     text:'Newton’s laws explain how forces change motion. First law: motion stays unchanged unless a net force acts. Second law: F = ma, so acceleration depends on force and mass. Third law: interacting objects exert equal and opposite forces. Try a small example and identify the force, mass and acceleration.'},
+    {keys:['democracy','constitution','civics'], title:'Social Science • Democracy',
+     text:'Democracy is a form of government in which people participate in choosing their representatives. Important ideas include free and fair elections, equality, accountability, rule of law and protection of rights.'},
+    {keys:['geometry','triangle','angle','circle','theorem'], title:'Maths • Geometry',
+     text:'For geometry, start by writing what is given and what you need to prove or find. Draw a clear diagram, mark equal sides/angles, choose the relevant theorem or formula, solve step by step, and finally check the result.'},
+    {keys:['algebra','equation','quadratic','polynomial'], title:'Maths • Algebra',
+     text:'For an algebra problem, simplify both sides carefully, collect like terms, isolate the unknown, and verify the answer by substituting it back into the original equation.'},
+    {keys:['cell','biology','tissue','diffusion','blood'], title:'Biology • Core Concepts',
+     text:'A good biology answer should include the definition, key features, mechanism/process, examples and significance. If you tell me the exact chapter or question, I can break it into exam-ready points.'},
+    {keys:['chemistry','atom','mole','reaction','periodic'], title:'Chemistry • Core Concepts',
+     text:'In chemistry, first identify the concept and the quantities given. Write the relevant formula or reaction, keep units consistent, calculate step by step, and check whether the final result is reasonable.'}
+  ];
+
+  let match = topics.find(t=>t.keys.some(k=>l.includes(k)));
+  let answer = match
+    ? `<b>${match.title}</b><p>${match.text}</p><p class="sub">💡 Tip: Ask me for <b>“deep explanation”</b>, <b>“short notes”</b>, or <b>“5 practice questions”</b> on this topic.</p>`
+    : `<b>💡 LUMIO Study Coach</b><p>Let’s solve it together. Tell me the <b>subject + exact question</b>, and I’ll break it into: <b>concept → steps → answer → quick revision tip</b>.</p><p class="sub">You can also ask: “Explain this deeply”, “Make short notes”, or “Give me a quiz”.</p>`;
+
+  a.innerHTML=`<div class="card" style="background:#0b0b16"><div style="display:flex;gap:10px;align-items:center"><span style="font-size:24px">🤖</span><b>LUMIO Coach</b></div><div style="margin-top:12px;line-height:1.7">${answer}</div></div>`;
+}
 const questions=[{q:'What is the SI unit of force?',o:['Joule','Newton','Watt','Pascal'],a:1},{q:'Which planet is known as the Red Planet?',o:['Venus','Mars','Jupiter','Mercury'],a:1},{q:'What is 12 × 8?',o:['86','96','108','112'],a:1}];let qi=0,score=0;
 function renderQuiz(){let x=questions[qi];document.getElementById('quizBox').innerHTML=`<div class="eyebrow">QUESTION ${qi+1} OF ${questions.length}</div><h2>${x.q}</h2>${x.o.map((o,i)=>`<button class="option" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<p class="sub">Score: ${score}</p>`}
 function answer(i){let x=questions[qi],opts=document.querySelectorAll('.option');opts[i].classList.add(i===x.a?'correct':'wrong');if(i===x.a)score++;setTimeout(()=>{qi++;if(qi>=questions.length){document.getElementById('quizBox').innerHTML=`<div style="text-align:center"><div class="big">🎉 ${score}/${questions.length}</div><h2>Quiz complete!</h2><p class="sub">Nice work. Practice again to improve your score.</p><button class="btn" onclick="qi=0;score=0;renderQuiz()">Try again</button></div>`}else renderQuiz()},500)}
